@@ -19,11 +19,12 @@ while [[ "${CMakeProjectName}" == '' || "${CMakeProjectName}" =~ ${validation} ]
 done
 
 #--- Execute ouput file name
-read -p $'\e[38;2;168;212;255mName the CMake executable file the same as the project name? (y/<new-name>):\e[0m ' execute
-if [[ ${execute} == 'y' ]] || [[ ${execute} == 'Y' ]]; then
+read -p $'\e[38;2;168;212;255mName the CMake executable file the same as the project name? (Y/n):\e[0m ' execute
+if [[ ${execute} == 'y' ]] || [[ ${execute} == 'Y' ]] || [[ ${execute} == '' ]]; then
     execute=${CMakeProjectName}
-else
-    while [[ "${execute}" == '' || "${execute}" =~ ${validation} ]]; do
+elif [[ ${execute} == 'n' ]] || [[ ${execute} == 'N' ]]; then
+	read -p $'\e[38;2;168;212;255mExecute file name : \e[0m ' execute
+    while [[ "${execute}" =~ ${validation} ]]; do
         read -p $'\e[38;2;255;51;51mInvalid name (a-z, A-Z, 0-9, -, _)! :\e[0m ' execute
     done
 fi
