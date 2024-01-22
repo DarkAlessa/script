@@ -113,7 +113,7 @@ int main(int argc, char** argv) {
     SDL_Event e;
 
     while(!quit) {
-        while(SDL_PollEvent(&e) != 0) {
+        while(SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT)
             quit = true;
         }
