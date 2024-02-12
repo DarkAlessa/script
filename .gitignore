@@ -1,9 +1,26 @@
-### CMake Project ###
-**/build
+# Matching Rules
+# logs/ match "logs/x.log", "logs/dir/x.log", "dir/logs/x.log", "build/logs/dir/x.log"
+# /build[AB] match "/buildA" or "/buildB"
+# /build? match "/build0", "/build1" but not "/build10"
+# /build[0-9] match "/build0", "/build9", but not "/build10"
+# /build[!01] match "/build2", but not "/build0", "/build1", "/build01"
+# /build* match "/build", "/builddir"
+# **/bin  matches file or directory "bin" anywhere
+# /bin/** matches everything inside /bin
+# a/**/b" matches "a/b", "a/x/b", "a/x/y/b" and so on
+# /dir/*  matches "/dir/a.txt" but not "/dir/dir2/a.txt"
+# !/dir/a.txt excluded "/dir/a.txt" file
+
+#/// CMake Build
+**/build*
 **/bin
 **/test*
 
-### C ###
+#/// Meson Build
+/subprojects/*
+!/subprojects/*.wrap
+
+#/// C
 # Prerequisites
 *.d
 
@@ -57,7 +74,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-### C++ ###
+#/// C++
 # Prerequisites
 
 # Compiled Object files
@@ -76,13 +93,13 @@ dkms.conf
 
 # Executables
 
-### PowerShell ###
+#/// PowerShell
 # Exclude packaged modules
 *.zip
 
 # Exclude .NET assemblies from source
 
-### Vim ###
+#/// Vim
 # Swap
 [._]*.s[a-v][a-z]
 !*.svg  # comment out if you don't need vector files
@@ -103,7 +120,7 @@ tags
 # Persistent undo
 [._]*.un~
 
-### VSCode ###
+#/// VSCode
 **/.vscode
 .vscode/*
 !.vscode/settings.json
@@ -118,12 +135,12 @@ tags
 # Built Visual Studio Code Extensions
 *.vsix
 
-### VSCode Patch ###
+#/// VSCode Patch
 # Ignore all local history of files
 .history
 .ionide
 
-### Windows ###
+#/// Windows
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
