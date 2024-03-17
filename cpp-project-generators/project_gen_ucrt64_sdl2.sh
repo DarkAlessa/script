@@ -184,8 +184,7 @@ void present() {
 void close() {
     SDL_DestroyRenderer(windowRenderer);
     SDL_DestroyWindow(window);
-    windowRenderer = nullptr;
-    window = nullptr;
+
     SDL_Quit();
 }
 EOF
