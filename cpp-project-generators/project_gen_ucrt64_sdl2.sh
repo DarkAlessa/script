@@ -64,10 +64,6 @@ target_include_directories(include_interface INTERFACE
     \$<BUILD_LOCAL_INTERFACE:\${SDL2_INCLUDE_DIRS}>
 )
 
-add_subdirectory(src)
-EOF
-
-cat << EOF > ./${ProjectName}/src/CMakeLists.txt
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
@@ -78,8 +74,8 @@ find_package(SDL2_ttf REQUIRED)
 #add_executable(${execute} WIN32)
 add_executable(${execute})
 target_sources(${execute} PRIVATE
-    \${CMAKE_CURRENT_SOURCE_DIR}/${execute}.cpp
-    \${CMAKE_CURRENT_SOURCE_DIR}/app.cpp
+    \${CMAKE_SOURCE_DIR}/src/${execute}.cpp
+    \${CMAKE_SOURCE_DIR}/src/app.cpp
 )
 
 target_link_libraries(${execute} PRIVATE
@@ -110,9 +106,9 @@ int main(int argc, char** argv) {
     init();
   
     bool quit = false;
-    SDL_Event e;
 
     while(!quit) {
+        SDL_Event e;
         while(SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT)
             quit = true;

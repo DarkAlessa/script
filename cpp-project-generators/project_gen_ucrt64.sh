@@ -62,13 +62,9 @@ target_include_directories(include_interface INTERFACE
   \$<BUILD_LOCAL_INTERFACE:\${CMAKE_SOURCE_DIR}/include>
 )
 
-add_subdirectory(src)
-EOF
-
-cat << EOF > ./${ProjectName}/src/CMakeLists.txt
 add_executable(${execute} WIN32)
 target_sources(${execute} PRIVATE
-    \${CMAKE_CURRENT_SOURCE_DIR}/${execute}.cpp
+    \${CMAKE_SOURCE_DIR}/src/${execute}.cpp
 )
 
 target_link_libraries(${execute} PRIVATE

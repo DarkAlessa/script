@@ -23,7 +23,7 @@ read -p $'\e[38;2;168;212;255mName the CMake executable file the same as the pro
 if [[ ${execute} == 'y' ]] || [[ ${execute} == 'Y' ]] || [[ ${execute} == '' ]]; then
     execute=${CMakeProjectName}
 elif [[ ${execute} == 'n' ]] || [[ ${execute} == 'N' ]]; then
-	read -p $'\e[38;2;168;212;255mExecute file name : \e[0m ' execute
+    read -p $'\e[38;2;168;212;255mExecute file name : \e[0m ' execute
     while [[ "${execute}" =~ ${validation} ]]; do
         read -p $'\e[38;2;255;51;51mInvalid name (a-z, A-Z, 0-9, -, _)! :\e[0m ' execute
     done
@@ -49,30 +49,26 @@ project(${CMakeProjectName} VERSION 1.0.0 LANGUAGES C CXX)
 add_library(compiler_flags INTERFACE)
 target_compile_features(compiler_flags INTERFACE \$<BUILD_LOCAL_INTERFACE:cxx_std_23>)
 target_compile_options(compiler_flags BEFORE INTERFACE
-	\$<BUILD_LOCAL_INTERFACE:-Wall;-Werror;-Wpedantic>
-	\$<BUILD_LOCAL_INTERFACE:\${GTKMM_CFLAGS_OTHER}>
+    \$<BUILD_LOCAL_INTERFACE:-Wall;-Werror;-Wpedantic>
+    \$<BUILD_LOCAL_INTERFACE:\${GTKMM_CFLAGS_OTHER}>
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "\${CMAKE_SOURCE_DIR}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "\${CMAKE_SOURCE_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "\${CMAKE_SOURCE_DIR}/lib")
 
-add_subdirectory(src)
-EOF
-
-cat << EOF > ./${ProjectName}/src/CMakeLists.txt
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
 
 add_executable(${execute} WIN32)
 target_sources(${execute} PRIVATE
-	\${CMAKE_CURRENT_SOURCE_DIR}/${execute}.cpp
-	\${CMAKE_CURRENT_SOURCE_DIR}/app.cpp
+    \${CMAKE_SOURCE_DIR}/src/${execute}.cpp
+    \${CMAKE_SOURCE_DIR}/src/app.cpp
 )
 
 target_include_directories(${execute} PUBLIC
-  	\${CMAKE_SOURCE_DIR}/include
-	\${GTKMM_INCLUDE_DIRS}
+    \${CMAKE_SOURCE_DIR}/include
+    \${GTKMM_INCLUDE_DIRS}
 )
 
 target_link_directories(${execute} PUBLIC \${GTKMM_LIBRARY_DIRS})
@@ -88,14 +84,14 @@ cat << 'EOF' > ./${ProjectName}/src/${execute}.cpp
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-		auto app = Gtk::Application::create("demo");
+    auto app = Gtk::Application::create("demo");
 
-		/* Dark theme
-		auto settings = Gtk::Settings::get_default();
-		settings->property_gtk_application_prefer_dark_theme() = true;
-		*/
+    /* Dark theme
+    auto settings = Gtk::Settings::get_default();
+    settings->property_gtk_application_prefer_dark_theme() = true;
+    */
 
-		return app->make_window_and_run<My_window>(argc, argv);
+    return app->make_window_and_run<My_window>(argc, argv);
 }
 EOF
 
@@ -108,7 +104,7 @@ cat << 'EOF' > ./${ProjectName}/include/app.h
 
 class My_window : public Gtk::Window {
 public:
-	My_window();
+    My_window();
 };
 
 #endif // APP_H
@@ -119,8 +115,8 @@ cat << 'EOF' > ./${ProjectName}/src/app.cpp
 #include "app.h"
 
 My_window::My_window() {
-	set_title("Demo");
-	set_default_size(640, 420);
+    set_title("Demo");
+    set_default_size(640, 420);
 }
 EOF
 

@@ -24,7 +24,7 @@ read -p $'\e[38;2;168;212;255mName the CMake executable file the same as the pro
 if [[ ${execute} == 'y' ]] || [[ ${execute} == 'Y' ]] || [[ ${execute} == '' ]]; then
     execute=${CMakeProjectName}
 elif [[ ${execute} == 'n' ]] || [[ ${execute} == 'N' ]]; then
-  read -p $'\e[38;2;168;212;255mExecute file name : \e[0m ' execute
+    read -p $'\e[38;2;168;212;255mExecute file name : \e[0m ' execute
     while [[ "${execute}" =~ ${validation} ]]; do
         read -p $'\e[38;2;255;51;51mInvalid name (a-z, A-Z, 0-9, -, _)! :\e[0m ' execute
     done
@@ -50,7 +50,7 @@ project(${CMakeProjectName} VERSION 1.0.0 LANGUAGES C CXX)
 add_library(compiler_flags INTERFACE)
 target_compile_features(compiler_flags INTERFACE \$<BUILD_LOCAL_INTERFACE:cxx_std_23>)
 target_compile_options(compiler_flags BEFORE INTERFACE
-  \$<BUILD_LOCAL_INTERFACE:-Wall;-Werror;-Wpedantic>
+    \$<BUILD_LOCAL_INTERFACE:-Wall;-Werror;-Wpedantic>
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "\${CMAKE_SOURCE_DIR}/")
@@ -60,19 +60,15 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "\${CMAKE_SOURCE_DIR}/lib")
 # include directory INTERFACE
 add_library(include_interface INTERFACE)
 target_include_directories(include_interface INTERFACE
-  \$<BUILD_LOCAL_INTERFACE:\${CMAKE_SOURCE_DIR}/include>
+    \$<BUILD_LOCAL_INTERFACE:\${CMAKE_SOURCE_DIR}/include>
 )
 
-add_subdirectory(src)
-EOF
-
-cat << EOF > ./${ProjectName}/src/CMakeLists.txt
 # fine SFML package : use "pkgconf --list-all | grep sfml" for show packages
 find_package(SFML 2.6 COMPONENTS network audio graphics window system REQUIRED)
 
 add_executable(${execute} WIN32)
 target_sources(${execute} PRIVATE
-    \${CMAKE_CURRENT_SOURCE_DIR}/${execute}.cpp
+    \${CMAKE_SOURCE_DIR}/src/${execute}.cpp
 )
 
 target_link_libraries(${execute} PRIVATE
