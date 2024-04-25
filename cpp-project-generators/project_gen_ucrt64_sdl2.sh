@@ -9,7 +9,6 @@ done
 mkdir -p ./${ProjectName}/src \
          ./${ProjectName}/include \
          ./${ProjectName}/build \
-         ./${ProjectName}/lib \
          ./${ProjectName}/assets
 echo -e "\e[38;2;181;255;168mThe project directory named \"${ProjectName}\" has been created. ✓\e[0m"
 
