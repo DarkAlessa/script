@@ -119,6 +119,111 @@ My_window::My_window() {
 }
 EOF
 
+#--- VSCode .vscode folders
+#   c_cpp_properties.json
+#   launch.json
+#   tasks.json
+#GCC_VERSION=$(g++ --version | head -n 1 | awk '{print $7}')
+
+mkdir ./${ProjectName}/.vscode
+cat << EOF > ./${ProjectName}/.vscode/c_cpp_properties.json
+{
+  "env": {
+    "myDefaultIncludePath": [
+      "\${workspaceFolder}",
+      "\${workspaceFolder}/include"
+    ],
+    "myCompilerPath": "C:/msys64/ucrt64/bin/g++.exe"
+  },
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "\${workspaceFolder}/**",
+        "\${myDefaultIncludePath}",
+        "C:/msys64/ucrt64/include/**",
+        "C:/msys64/ucrt64/lib/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "compilerPath": "\${myCompilerPath}",
+      "cStandard": "c23",
+      "cppStandard": "c++${getCPPstd}",
+      "intelliSenseMode": "windows-gcc-x64",
+      "browse": {
+        "path": [
+          "\${workspaceFolder}",
+          "C:/msys64/ucrt64/lib",
+          "C:/msys64/ucrt64/x86_64-w64-mingw32"      
+        ],
+        "limitSymbolsToIncludedHeaders": true,
+        "databaseFilename": ""
+      }
+    }
+  ],
+  "version": 4
+}
+EOF
+
+cat << EOF > ./${ProjectName}/.vscode/launch.json
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(gdb) Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "\${workspaceFolder}/${execute}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "\${workspaceFolder}/build",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/msys64/ucrt64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+      //"preLaunchTask": "Make"
+    }
+  ]
+}
+EOF
+
+cat << 'EOF' > ./${ProjectName}/.vscode/tasks.json
+{
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "CMake --build",
+      "type": "shell",
+      "windows":{
+        "command": "cmake --build ./build"
+      },
+      "linux":{
+        "command": "cmake --build ./build"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+  ]
+}
+EOF
+
 #--- Build CMake project
 echo "-------------------------------"
 cmake -S ./${ProjectName} -B ./${ProjectName}/build -G "MSYS Makefiles"

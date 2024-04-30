@@ -217,7 +217,7 @@ cat << EOF > ./${ProjectName}/.vscode/c_cpp_properties.json
       "compilerPath": "\${myCompilerPath}",
       "cStandard": "c17",
       "cppStandard": "c++${getCPPstd}",
-      "intelliSenseMode": "gcc-x64",
+      "intelliSenseMode": "windows-gcc-x64",
       "browse": {
         "path": [
           "\${workspaceFolder}",
